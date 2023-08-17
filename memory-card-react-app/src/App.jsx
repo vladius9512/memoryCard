@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Card from "./components/card";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+    const [isCardSelected, setCardSelected] = useState(false);
+    const [gameState, setGameState] = useState({
+        score: 0,
+        maxSore: 0,
+        won: false,
+    });
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    function handleClick() {
+        setCardSelected((isCardSelected) => !isCardSelected);
+        console.log(isCardSelected);
+    }
 
-export default App
+    return (
+        <div>
+            <p>score: {gameState.score}</p>
+            <button
+                onClick={() =>
+                    setGameState((prevState) => ({
+                        ...prevState,
+                        score: prevState.score + 1,
+                    }))
+                }
+            >
+                Click
+            </button>
+            <Card
+                name="A"
+                isCardSelected={isCardSelected}
+                onClick={() => {
+                    setCardSelected((isCardSelected) => !isCardSelected);
+                }}
+            ></Card>
+            {isCardSelected ? <p>true</p> : <p>false</p>}
+            <button onClick={handleClick}>State is {isCardSelected}</button>
+            <Card name="B" onClick={handleClick}></Card>
+            <Card name="C"></Card>
+        </div>
+    );
+};
+
+export default App;
