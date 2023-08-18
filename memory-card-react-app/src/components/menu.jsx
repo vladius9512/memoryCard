@@ -1,9 +1,9 @@
 import React from "react";
 
-const Menu = () => {
+const Menu = ({ handleStartGameClick }) => {
     return (
         <div>
-            <button>Start Game</button>
+            <button onClick={handleStartGameClick}>Start Game</button>
         </div>
     );
 };

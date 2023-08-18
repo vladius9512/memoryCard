@@ -1,9 +1,10 @@
 import React from "react";
 
-const Card = ({ name }) => {
+const Card = ({ name, url, handleCardSelect }) => {
     return (
         <div className="card">
-            <button>Click {name}</button>
+            <img src={url} onClick={handleCardSelect} />
+            <p>{name}</p>
         </div>
     );
 };
