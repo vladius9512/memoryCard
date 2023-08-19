@@ -5,10 +5,9 @@ import viteLogo from "/vite.svg";
 import Menu from "./components/menu";
 
 const App = () => {
-    const [isCardSelected, setCardSelected] = useState(false);
     const [gameState, setGameState] = useState({
         score: 0,
-        maxSore: 0,
+        maxScore: 0,
         won: false,
         gameIsLive: false,
     });
@@ -21,19 +20,17 @@ const App = () => {
         );
         const data = await response.json();
         console.log(data);
-        data.data.map((elem) => {
-            cards.push({
-                id: elem.id,
-                url: elem.images.fixed_height.url,
-                title: elem.title,
-            });
+        data.data.map((elem, index) => {
+            if (index < 8)
+                cards.push({
+                    id: elem.id,
+                    url: elem.images.fixed_height.url,
+                    title: elem.title,
+                    value: 0,
+                    index: index,
+                });
         });
         setImages(cards);
-    }
-
-    function handleCardSelect() {
-        setCardSelected((isCardSelected) => !isCardSelected);
-        console.log(isCardSelected);
     }
 
     async function handleStartGameClick() {
@@ -42,42 +39,54 @@ const App = () => {
             ...prevState,
             gameIsLive: !prevState.gameIsLive,
         }));
-        console.log(images);
-        console.log(gameState);
     }
+    function handleCardSelect(index) {
+        const newList = images.map((image) => {
+            if (image.index === index) {
+                image.value = image.value + 1;
+            }
+            return image;
+        });
+        setImages(newList);
+        console.log(images);
+    }
+
+    const checkIfClicked = (data) => {
+        if (data.isCardSelected === 2) {
+            setGameState((prevState) => ({
+                ...prevState,
+                maxSore:
+                    prevState.score > prevState.maxScore
+                        ? prevState.score
+                        : prevState.maxScore,
+                score: 0,
+                gameIsLive: !prevState.gameIsLive,
+            }));
+        } else {
+            setGameState((prevState) => ({
+                ...prevState,
+                score: prevState.score + 1,
+            }));
+        }
+    };
 
     return (
         <div>
             <p>score: {gameState.score}</p>
+            <p>Max score: {gameState.maxScore}</p>
             <Menu handleStartGameClick={handleStartGameClick}></Menu>
-            {images.map((elem, index) => {
-                if (index <= 8)
-                    return (
-                        <Card
-                            name={elem.title}
-                            key={elem.id}
-                            url={elem.url}
-                            isCardSelected={isCardSelected}
-                            handleCardSelect={handleCardSelect}
-                        ></Card>
-                    );
+            {images.map((elem) => {
+                return (
+                    <Card
+                        name={elem.title}
+                        key={elem.id}
+                        url={elem.url}
+                        value={elem.value}
+                        index={elem.index}
+                        handleCardSelect={handleCardSelect}
+                    ></Card>
+                );
             })}
-            {setGameState.gameIsLive ? (
-                images.map((elem, index) => {
-                    if (index === 0)
-                        return (
-                            <Card
-                                name={elem.title}
-                                key={elem.id}
-                                url={elem.url}
-                                isCardSelected={isCardSelected}
-                                handleCardSelect={handleCardSelect}
-                            ></Card>
-                        );
-                })
-            ) : (
-                <Menu handleStartGameClick={handleStartGameClick}></Menu>
-            )}
         </div>
     );
 };
