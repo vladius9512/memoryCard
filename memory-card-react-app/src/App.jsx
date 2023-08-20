@@ -5,6 +5,7 @@ import viteLogo from "/vite.svg";
 import Menu from "./components/menu";
 
 const App = () => {
+    const [isCardSelected, setCardSelec] = useState(false);
     const [gameState, setGameState] = useState({
         score: 0,
         maxScore: 0,
