@@ -5,7 +5,6 @@ import viteLogo from "/vite.svg";
 import Menu from "./components/menu";
 
 const App = () => {
-    const [isCardSelected, setCardSelec] = useState(false);
     const [gameState, setGameState] = useState({
         score: 0,
         maxScore: 0,
@@ -42,12 +41,40 @@ const App = () => {
         }));
     }
     function handleCardSelect(index) {
-        const newList = images.map((image) => {
+        let newList = images.map((image) => {
+            if (image.index === index && image.value === 1) {
+                if (gameState.score > gameState.maxScore) {
+                    setGameState((prevState) => ({
+                        ...prevState,
+                        maxScore: prevState.score,
+                    }));
+                }
+                setGameState((prevState) => ({
+                    ...prevState,
+                    score: 0,
+                    gameIsLive: !prevState.gameIsLive,
+                }));
+            }
             if (image.index === index) {
                 image.value = image.value + 1;
+                setGameState((prevState) => ({
+                    ...prevState,
+                    score: prevState.score + 1,
+                }));
             }
             return image;
         });
+        if (!gameState.gameIsLive) {
+            setGameState((prevState) => ({
+                ...prevState,
+                gameIsLive: !prevState.gameIsLive,
+            }));
+            console.log(gameState);
+            newList = images.map((image) => {
+                image.value = 0;
+                return image;
+            });
+        }
         shuffleArray(newList);
         setImages(newList);
         console.log(images);
