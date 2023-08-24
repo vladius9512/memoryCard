@@ -1,0 +1,11 @@
+.score {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+.cards {
+    display: grid;
+    max-width: 1080px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}

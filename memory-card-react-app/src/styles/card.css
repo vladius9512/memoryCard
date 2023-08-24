@@ -1,0 +1,12 @@
+.card {
+    border: 1px solid red;
+    max-width: 241px;
+    transition: all 0.2s ease-in-out;
+}
+img {
+    max-width: 240px;
+}
+.card:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}

@@ -3,6 +3,7 @@ import Card from "./components/card";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import Menu from "./components/menu";
+import "./styles/app.css";
 
 const App = () => {
     const [gameState, setGameState] = useState({
@@ -95,43 +96,30 @@ const App = () => {
         return array;
     }
 
-    const checkIfClicked = (data) => {
-        if (data.isCardSelected === 2) {
-            setGameState((prevState) => ({
-                ...prevState,
-                maxSore:
-                    prevState.score > prevState.maxScore
-                        ? prevState.score
-                        : prevState.maxScore,
-                score: 0,
-                gameIsLive: !prevState.gameIsLive,
-            }));
-        } else {
-            setGameState((prevState) => ({
-                ...prevState,
-                score: prevState.score + 1,
-            }));
-        }
-    };
-
     return (
-        <div>
-            <p>score: {gameState.score}</p>
-            <p>Max score: {gameState.maxScore}</p>
+        <main>
+            <div className="score">
+                <p>score: {gameState.score}</p>
+                <p>Max score: {gameState.maxScore}</p>
+            </div>
             <Menu handleStartGameClick={handleStartGameClick}></Menu>
-            {images.map((elem) => {
-                return (
-                    <Card
-                        name={elem.title}
-                        key={elem.id}
-                        url={elem.url}
-                        value={elem.value}
-                        index={elem.index}
-                        handleCardSelect={handleCardSelect}
-                    ></Card>
-                );
-            })}
-        </div>
+            <div className="cards-wrapper">
+                <div className="cards">
+                    {images.map((elem) => {
+                        return (
+                            <Card
+                                name={elem.title}
+                                key={elem.id}
+                                url={elem.url}
+                                value={elem.value}
+                                index={elem.index}
+                                handleCardSelect={handleCardSelect}
+                            ></Card>
+                        );
+                    })}
+                </div>
+            </div>
+        </main>
     );
 };
 
