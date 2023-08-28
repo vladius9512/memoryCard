@@ -11,6 +11,7 @@ const App = () => {
         maxScore: 0,
         won: false,
         gameIsLive: false,
+        clicked: false,
     });
     const [images, setImages] = useState([]);
     const cards = [];
@@ -39,6 +40,7 @@ const App = () => {
         setGameState((prevState) => ({
             ...prevState,
             gameIsLive: !prevState.gameIsLive,
+            clicked: true,
         }));
     }
     function handleCardSelect(index) {
@@ -102,22 +104,30 @@ const App = () => {
                 <p>score: {gameState.score}</p>
                 <p>Max score: {gameState.maxScore}</p>
             </div>
-            <Menu handleStartGameClick={handleStartGameClick}></Menu>
+            <div className="instructions">
+                <p>How to play?</p>
+                You have to click each gif only once. Will your memory manage
+                this?
+            </div>
             <div className="cards-wrapper">
-                <div className="cards">
-                    {images.map((elem) => {
-                        return (
-                            <Card
-                                name={elem.title}
-                                key={elem.id}
-                                url={elem.url}
-                                value={elem.value}
-                                index={elem.index}
-                                handleCardSelect={handleCardSelect}
-                            ></Card>
-                        );
-                    })}
-                </div>
+                {gameState.clicked ? (
+                    <div className="cards">
+                        {images.map((elem) => {
+                            return (
+                                <Card
+                                    name={elem.title}
+                                    key={elem.id}
+                                    url={elem.url}
+                                    value={elem.value}
+                                    index={elem.index}
+                                    handleCardSelect={handleCardSelect}
+                                ></Card>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <Menu handleStartGameClick={handleStartGameClick} />
+                )}
             </div>
         </main>
     );
