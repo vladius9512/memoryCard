@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import "../styles/card.css";
 
 const Card = ({ name, url, handleCardSelect, index }) => {

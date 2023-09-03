@@ -23,7 +23,7 @@ const App = () => {
         const data = await response.json();
         console.log(data);
         data.data.map((elem, index) => {
-            if (index < 8)
+            if (index < 12)
                 cards.push({
                     id: elem.id,
                     url: elem.images.fixed_height.url,
@@ -58,7 +58,7 @@ const App = () => {
                     gameIsLive: !prevState.gameIsLive,
                 }));
             }
-            if (image.index === index) {
+            if (image.index === index && image.value === 0) {
                 image.value = image.value + 1;
                 setGameState((prevState) => ({
                     ...prevState,
@@ -126,7 +126,9 @@ const App = () => {
                         })}
                     </div>
                 ) : (
-                    <Menu handleStartGameClick={handleStartGameClick} />
+                    <div className="button-wrapper">
+                        <Menu handleStartGameClick={handleStartGameClick} />
+                    </div>
                 )}
             </div>
         </main>

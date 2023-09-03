@@ -1,12 +1,16 @@
 .card {
-    border: 1px solid red;
     max-width: 241px;
     transition: all 0.2s ease-in-out;
 }
 img {
     max-width: 240px;
+    clip-path: circle(50%);
+    transition: all 0.3s ease-in-out;
 }
 .card:hover {
     transform: scale(1.1);
     cursor: pointer;
+}
+.card:hover img {
+    clip-path: circle(100%);
 }

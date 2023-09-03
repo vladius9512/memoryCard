@@ -9,3 +9,33 @@
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1rem;
 }
+
+.cards-wrapper button {
+    padding: 0.5rem 1rem;
+    background-color: #575a6b;
+    border: none;
+    border-radius: 0.7rem;
+    font-weight: bold;
+    clip-path: polygon(25% 20%, 75% 20%, 100% 50%, 75% 75%, 25% 75%, 0% 50%);
+    transition: all 0.3s ease-in-out;
+}
+
+.cards-wrapper button:hover {
+    background-color: #787c91;
+    color: #e3e4e8;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 100% 100%, 0 100%, 0% 50%);
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.instructions {
+    margin-bottom: 2rem;
+}
+.instructions p {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
